@@ -13,7 +13,6 @@ beforeEach(function () {
 
 it('is can successfully call all public methods', function () {
     $teamCity = new TeamCity(__DIR__ . '/output.txt', false, DefaultResultPrinter::COLOR_ALWAYS);
-    expect($teamCity::isPestTest($this))->toBeTrue();
     $teamCity->startTestSuite(new TestSuite());
     $teamCity->startTest($this);
     $teamCity->addError($this, new Exception('Don\'t worry about this error. Its purposeful.'), 0);

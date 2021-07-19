@@ -170,12 +170,6 @@ final class TeamCity extends DefaultResultPrinter
      */
     public function startTest(Test $test): void
     {
-        if (!TeamCity::isPestTest($test)) {
-            $this->phpunitTeamCity->startTest($test);
-
-            return;
-        }
-
         $this->printEvent('testStarted', [
             self::NAME => $test->getName(),
             // @phpstan-ignore-next-line
@@ -187,25 +181,11 @@ final class TeamCity extends DefaultResultPrinter
         }
     }
 
-    public static function isPestTest(Test $test): bool
-    {
-        /** @var array<string, string> $uses */
-        $uses = class_uses($test);
-
-        return in_array(Testable::class, $uses, true);
-    }
-
     /**
      * @param Test|Testable $test
      */
     public function endTest(Test $test, float $time): void
     {
-        if (!TeamCity::isPestTest($test)) {
-            $this->phpunitTeamCity->endTest($test, $time);
-
-            return;
-        }
-
         if ($test instanceof TestCase) {
             $this->numAssertions += $test->getNumAssertions();
         } elseif ($test instanceof PhptTestCase) {
