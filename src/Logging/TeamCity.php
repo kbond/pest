@@ -53,7 +53,6 @@ final class TeamCity extends DefaultResultPrinter
     public function __construct($out, bool $verbose, string $colors)
     {
         parent::__construct($out, $verbose, $colors, false, 80, false);
-
         /* @phpstan-ignore-next-line  */
         if ($out === null || $out instanceof ConsoleOutputInterface) {
             $this->collisionPrinter = new Printer($out, $verbose, $colors);
@@ -176,6 +175,14 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->startTest($test);
         }
+    }
+
+    public static function isPestTest(Test $test): bool
+    {
+        /** @var array<string, string> $uses */
+        $uses = class_uses($test);
+
+        return in_array(Testable::class, $uses, true);
     }
 
     /**
