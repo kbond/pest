@@ -44,9 +44,6 @@ final class TeamCity extends DefaultResultPrinter
     /** @var bool */
     private $isSummaryTestCountPrinted = false;
 
-    /** @var \PHPUnit\Util\Log\TeamCity */
-    private $phpunitTeamCity;
-
     /** @var \NunoMaduro\Collision\Adapters\Phpunit\Printer|null Printer */
     private $collisionPrinter = null;
 
@@ -56,7 +53,7 @@ final class TeamCity extends DefaultResultPrinter
     public function __construct($out, bool $verbose, string $colors)
     {
         parent::__construct($out, $verbose, $colors, false, 80, false);
-        $this->phpunitTeamCity  = new \PHPUnit\Util\Log\TeamCity($out, $verbose, $colors);
+
         /* @phpstan-ignore-next-line  */
         if ($out === null || $out instanceof ConsoleOutputInterface) {
             $this->collisionPrinter = new Printer($out, $verbose, $colors);
