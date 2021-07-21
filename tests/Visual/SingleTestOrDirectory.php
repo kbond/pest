@@ -44,7 +44,7 @@ it('disable decorating printer when colors is set to never', function () use ($s
     expect($output)->toContain($snapshot('disable-decorating-printer'));
 })->skip(PHP_OS_FAMILY === 'Windows');
 
-it('outputs JUnit report correctly', function() use ($snapshot) {
+it('outputs JUnit report correctly', function () use ($snapshot) {
     $path = __DIR__ . '/junit.html';
     $process = new Process([
         'php',
@@ -57,6 +57,6 @@ it('outputs JUnit report correctly', function() use ($snapshot) {
     expect($snapshot('junit'))->toBe(preg_replace('/time="[\d\.]+"/', 'time="0"', file_get_contents($path)));
 });
 
-afterAll(function() {
+afterAll(function () {
     unlink(__DIR__ . '/junit.html');
 });
