@@ -43,3 +43,20 @@ it('disable decorating printer when colors is set to never', function () use ($s
     $output = $process->getOutput();
     expect($output)->toContain($snapshot('disable-decorating-printer'));
 })->skip(PHP_OS_FAMILY === 'Windows');
+
+it('outputs JUnit report correctly', function() use ($snapshot) {
+    $path = __DIR__ . '/junit.html';
+    $process = new Process([
+        'php',
+        './bin/pest',
+        "--log-junit=$path",
+        'tests/Fixtures/DirectoryWithTests/ExampleTest.php',
+    ], dirname(__DIR__, 2));
+    $process->run();
+
+    expect($snapshot('junit'))->toBe(preg_replace('/time="[\d\.]+"/', 'time="0"', file_get_contents($path)));
+});
+
+afterAll(function() {
+    unlink(__DIR__ . '/junit.html');
+});

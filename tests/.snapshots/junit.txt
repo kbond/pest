@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/Users/luke/Packages/pest/tests/Fixtures/DirectoryWithTests/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0">
+    <testsuite name="P\Tests\Fixtures\DirectoryWithTests\ExampleTest" file="/Users/luke/Packages/pest/tests/Fixtures/DirectoryWithTests/ExampleTest.php" tests="1" assertions="1" errors="0" warnings="0" failures="0" skipped="0" time="0">
+      <testcase name="it example 1" class="Tests\Fixtures\DirectoryWithTests\ExampleTest" classname="Tests.Fixtures.DirectoryWithTests.ExampleTest" file="/Users/luke/Packages/pest/tests/Fixtures/DirectoryWithTests/ExampleTest.php" assertions="1" time="0"/>
+    </testsuite>
+  </testsuite>
+</testsuites>

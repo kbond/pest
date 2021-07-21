@@ -9,6 +9,16 @@ beforeEach(function () {
     file_put_contents(__DIR__ . '/junit.html', '');
 });
 
+$snapshot = function ($name) {
+    $testsPath = dirname(__DIR__);
+
+    return file_get_contents(implode(DIRECTORY_SEPARATOR, [
+        $testsPath,
+        '.snapshots',
+        "$name.txt",
+    ]));
+};
+
 it('is can successfully call all public methods', function () {
     $junit = new JUnit(__DIR__ . '/junit.html');
     $junit->startTestSuite(new TestSuite());
@@ -22,6 +32,7 @@ it('is can successfully call all public methods', function () {
     $junit->endTest($this, 0);
     $junit->endTestSuite(new TestSuite());
     $this->expectNotToPerformAssertions();
+    $junit->flush();
 });
 
 afterEach(function () {
