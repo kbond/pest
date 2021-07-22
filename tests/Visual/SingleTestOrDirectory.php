@@ -54,7 +54,11 @@ it('outputs JUnit report correctly', function () use ($snapshot) {
     ], dirname(__DIR__, 2));
     $process->run();
 
-    expect($snapshot('junit'))->toBe(preg_replace('/time="[\d\.]+"/', 'time="0"', file_get_contents($path)));
+    expect($snapshot('junit'))->toBe(preg_replace(
+        ['/time="[\d\.]+"/', '/"[\/\w]+pest\/tests\/Fixtures\/DirectoryWithTests\/ExampleTest.php"/'],
+        ['time="0"', '"/home/runner/work/pest/pest/tests/Fixtures/DirectoryWithTests/ExampleTest.php"'],
+        file_get_contents($path)
+    ));
 });
 
 afterAll(function () {
