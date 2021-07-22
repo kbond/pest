@@ -26,6 +26,7 @@ final class TeamCity extends DefaultResultPrinter
     private const PROTOCOL            = 'pest_qn://';
     private const NAME                = 'name';
     private const LOCATION_HINT       = 'locationHint';
+    private const MESSAGE             = 'message';
     private const DURATION            = 'duration';
     private const TEST_SUITE_STARTED  = 'testSuiteStarted';
     private const TEST_SUITE_FINISHED = 'testSuiteFinished';
@@ -53,6 +54,7 @@ final class TeamCity extends DefaultResultPrinter
     public function __construct($out, bool $verbose, string $colors)
     {
         parent::__construct($out, $verbose, $colors, false, 80, false);
+
         /* @phpstan-ignore-next-line  */
         if ($out === null || $out instanceof ConsoleOutputInterface) {
             $this->collisionPrinter = new Printer($out, $verbose, $colors);
@@ -219,6 +221,12 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->addError($test, $t, $time);
         }
+
+        $this->printEvent('testFailed', [
+            self::NAME     => $test->getName(),
+            self::MESSAGE  => '',
+            self::DURATION => self::toMilliseconds($time),
+        ]);
     }
 
     public function addFailure(Test $test, AssertionFailedError $e, float $time): void
@@ -226,6 +234,12 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->addFailure($test, $e, $time);
         }
+
+        $this->printEvent('testFailed', [
+            self::NAME     => $test->getName(),
+            self::MESSAGE  => '',
+            self::DURATION => self::toMilliseconds($time),
+        ]);
     }
 
     public function addWarning(Test $test, Warning $e, float $time): void
@@ -240,6 +254,11 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->addIncompleteTest($test, $t, $time);
         }
+
+        $this->printEvent('testIgnored', [
+            self::NAME     => $test->getName(),
+            self::DURATION => self::toMilliseconds($time),
+        ]);
     }
 
     public function addRiskyTest(Test $test, Throwable $t, float $time): void
@@ -247,6 +266,11 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->addRiskyTest($test, $t, $time);
         }
+
+        $this->printEvent('testFailed', [
+            self::NAME     => $test->getName(),
+            self::DURATION => self::toMilliseconds($time),
+        ]);
     }
 
     public function addSkippedTest(Test $test, Throwable $t, float $time): void
@@ -254,5 +278,10 @@ final class TeamCity extends DefaultResultPrinter
         if ($this->collisionPrinter !== null) {
             $this->collisionPrinter->addSkippedTest($test, $t, $time);
         }
+
+        $this->printEvent('testIgnored', [
+            self::NAME     => $test->getName(),
+            self::DURATION => self::toMilliseconds($time),
+        ]);
     }
 }

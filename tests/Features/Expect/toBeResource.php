@@ -11,7 +11,7 @@ afterAll(function () use ($resource) {
 test('pass', function () use ($resource) {
     expect($resource)->toBeResource();
     expect(null)->not->toBeResource();
-});
+})->skip('readon');
 
 test('failures', function () {
     expect(null)->toBeResource();
