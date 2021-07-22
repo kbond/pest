@@ -258,7 +258,7 @@ final class TeamCity extends DefaultResultPrinter
         ob_start();
         $this->printEvent('testIgnored', [
             self::NAME     => $test->getName(),
-            'message' => ' ',
+            'message'      => ' ',
             self::DURATION => self::toMilliseconds($time),
         ]);
         ob_flush();
@@ -285,7 +285,7 @@ final class TeamCity extends DefaultResultPrinter
         ob_start();
         $this->printEvent('testIgnored', [
             self::NAME     => $test->getName(),
-            'message' => ' ',
+            'message'      => ' ',
             self::DURATION => self::toMilliseconds($time),
         ]);
         ob_flush();
