@@ -59,7 +59,7 @@ it('outputs JUnit report correctly', function () use ($snapshot) {
         ['time="0"', '"/home/runner/work/pest/pest/tests/Fixtures/DirectoryWithTests/ExampleTest.php"'],
         file_get_contents($path)
     ));
-});
+})->skip(PHP_OS_FAMILY === 'Windows');
 
 afterAll(function () {
     unlink(__DIR__ . '/junit.html');
