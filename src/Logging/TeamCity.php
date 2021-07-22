@@ -255,10 +255,13 @@ final class TeamCity extends DefaultResultPrinter
             $this->collisionPrinter->addIncompleteTest($test, $t, $time);
         }
 
+        ob_start();
         $this->printEvent('testIgnored', [
             self::NAME     => $test->getName(),
+            'message' => ' ',
             self::DURATION => self::toMilliseconds($time),
         ]);
+        ob_flush();
     }
 
     public function addRiskyTest(Test $test, Throwable $t, float $time): void
@@ -279,9 +282,12 @@ final class TeamCity extends DefaultResultPrinter
             $this->collisionPrinter->addSkippedTest($test, $t, $time);
         }
 
+        ob_start();
         $this->printEvent('testIgnored', [
             self::NAME     => $test->getName(),
+            'message' => ' ',
             self::DURATION => self::toMilliseconds($time),
         ]);
+        ob_flush();
     }
 }
